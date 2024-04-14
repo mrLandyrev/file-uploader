@@ -21,6 +21,7 @@ func BuildHandleList(db *sql.DB) func(c *gin.Context) {
 		"cc":         "cc",
 		"from":       "from",
 		"subject":    "subject",
+		"null":       "id",
 	}
 
 	return func(c *gin.Context) {
