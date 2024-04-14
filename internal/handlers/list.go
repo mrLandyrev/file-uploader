@@ -94,25 +94,23 @@ func BuildHandleList(db *sql.DB) func(c *gin.Context) {
 				&count,
 			)
 
-			isDanger := false
+			dangerValues := make([]string, 0)
 
 			for _, r := range cr {
-				if r.Match([]byte(content)) {
-					isDanger = true
-					break
-				}
+				dangerValues = append(dangerValues, r.FindAllString(string(content), -1)...)
 			}
 
 			res = append(res, gin.H{
-				"id":         id,
-				"fileName":   filename,
-				"sendDate":   send_date,
-				"uploadDate": upload_date,
-				"to":         strings.Split(to, ","),
-				"cc":         strings.Split(cc, ","),
-				"from":       strings.Split(from, ","),
-				"subject":    subject,
-				"isDanger":   isDanger,
+				"id":           id,
+				"fileName":     filename,
+				"sendDate":     send_date,
+				"uploadDate":   upload_date,
+				"to":           strings.Split(to, ","),
+				"cc":           strings.Split(cc, ","),
+				"from":         strings.Split(from, ","),
+				"subject":      subject,
+				"isDanger":     len(dangerValues) > 0,
+				"dangerValues": dangerValues,
 			})
 		}
 

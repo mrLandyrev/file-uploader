@@ -19,7 +19,7 @@ func BuildHandlerUpload(saveFileUseCase func(parsedResult usecases.ParsedResult,
 		f, _ := file.Open()
 		defer f.Close()
 
-		err = saveFileUseCase(usecases.ParseVor(f), file.Filename)
+		err = saveFileUseCase(usecases.ParseFiles(f), file.Filename)
 
 		if err != nil {
 			c.Status(500)
